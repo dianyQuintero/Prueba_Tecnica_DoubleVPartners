@@ -4,6 +4,7 @@ En este repositorio se encuentra la prueba técnica para el cargo de Software De
 ## Requerimientos
 - Docker
 - Go
+- PostgreSQL
 - [golang-migrate/migrate](https://github.com/golang-migrate/migrate)
   
   Para la instalación de la librería golang-migrate seguir las siguientes instrucciones:
