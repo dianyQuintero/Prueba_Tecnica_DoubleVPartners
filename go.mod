@@ -1,4 +1,4 @@
-module github.com/dianyQuintero/Prueba_Tecnica_DoubleVPartners.git
+module github.com/dianyQuintero/Prueba_Tecnica_DoubleVPartners
 
 go 1.16
 

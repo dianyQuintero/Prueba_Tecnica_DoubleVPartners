@@ -21,14 +21,15 @@ func (db Database) GetAllItems() (*models.ItemList, error) {
 }
 func (db Database) AddItem(item *models.Item) error {
     var id int
-    var createdAt string
+	var fecha_creacion string
+	var estado_abierto string
     query := `INSERT INTO items (usuario) VALUES ($1) RETURNING id, fecha_creacion, estado_abierto`
-    err := db.Conn.QueryRow(query, item.Usuario).Scan(&id, &createdAt, &estado_abierto)
+    err := db.Conn.QueryRow(query, item.Usuario).Scan(&id, &fecha_creacion, &estado_abierto)
     if err != nil {
         return err
     }
     item.ID = id
-	item.CreatedAt = createdAt
+	item.FechaCreacion = fecha_creacion
 	item.Estado_Abierto = estado_abierto
     return nil
 }
@@ -56,7 +57,7 @@ func (db Database) DeleteItem(itemId int) error {
 func (db Database) UpdateItem(itemId int, itemData models.Item) (models.Item, error) {
     item := models.Item{}
     query := `UPDATE items SET name=$1, fecha_actualizacion=$2, estado_abierto=$3 WHERE id=$4 RETURNING id, usuario, fecha_creacion, fecha_actualizacion, estado_abierto;`
-    err := db.Conn.QueryRow(query, itemData.Usuario, itemData.Description, itemId).Scan(&item.ID, &item.Usuario, &item.FechaCreacion, &item.FechaActualizacion, &item.Estado_Abierto)
+    err := db.Conn.QueryRow(query, itemData.Usuario, itemData.FechaActualizacion, itemData.Estado_Abierto, itemId).Scan(&item.ID, &item.Usuario, &item.FechaCreacion, &item.FechaActualizacion, &item.Estado_Abierto)
     if err != nil {
         if err == sql.ErrNoRows {
             return item, ErrNoMatch
